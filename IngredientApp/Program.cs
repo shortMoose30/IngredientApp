@@ -29,6 +29,24 @@ class RecipeApp
         int numIngredients = Convert.ToInt32(Console.ReadLine());
         ingredients = new Ingredient[numIngredients]; // Initialize ingredients array
 
+        // Loop to input details for each ingredient
+        for (int i = 0; i < numIngredients; i++)
+        {
+            ingredients[i] = new Ingredient(); // Initialize new ingredient object
+
+            // Prompt user for ingredient name, quantity, and unit
+            Console.Write($"Enter the name of ingredient {i + 1}: ");
+            ingredients[i].Name = Console.ReadLine();
+
+            Console.Write($"Enter the quantity of {ingredients[i].Name}: ");
+            ingredients[i].Quantity = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write($"Enter the unit of measurement for {ingredients[i].Name}: ");
+            ingredients[i].Unit = Console.ReadLine();
+        }
+
+
+
 
 
 
