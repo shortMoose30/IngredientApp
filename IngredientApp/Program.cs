@@ -16,6 +16,10 @@ class Step
     public string Description { get; set; } // Description of the step
 }
 
+// Class to manage recipe details and operations
+class RecipeApp
+
+
 
 
 
