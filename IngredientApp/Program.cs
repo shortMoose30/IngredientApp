@@ -102,6 +102,15 @@ class RecipeApp
     }
 }
 
+// Main program class
+class Program
+{
+    // Main method
+    static void Main(string[] args)
+    {
+        RecipeApp recipeApp = new RecipeApp(); // Initialize RecipeApp object
+        bool running = true
+
 
 
 
