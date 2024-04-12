@@ -62,6 +62,16 @@ class RecipeApp
 
     // Method to display the recipe
     public void DisplayRecipe()
+    {
+        Console.WriteLine("\nRecipe:");
+        Console.WriteLine("Ingredients:");
+
+        // Display each ingredient with its quantity and unit
+        foreach (Ingredient ingredient in ingredients)
+        {
+            Console.WriteLine($"{ingredient.Quantity} {ingredient.Unit} of {ingredient.Name}");
+        }
+
 
 
 
