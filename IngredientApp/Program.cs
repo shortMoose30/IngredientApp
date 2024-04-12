@@ -125,6 +125,37 @@ class Program
 
             int choice = Convert.ToInt32(Console.ReadLine());
 
+            // Switch case to perform actions based on user choice
+            switch (choice)
+            {
+                case 1:
+                    recipeApp.EnterRecipeDetails(); // Call EnterRecipeDetails method
+                    break;
+                case 2:
+                    recipeApp.DisplayRecipe(); // Call DisplayRecipe method
+                    break;
+                case 3:
+                    Console.Write("Enter scaling factor (0.5, 2, or 3): ");
+                    double factor = Convert.ToDouble(Console.ReadLine());
+                    recipeApp.ScaleRecipe(factor); // Call ScaleRecipe method with user-provided factor
+                    break;
+                case 4:
+                    recipeApp.ResetQuantities(); // Call ResetQuantities method
+                    break;
+                case 5:
+                    recipeApp.ClearData(); // Call ClearData method
+                    break;
+                case 6:
+                    running = false; // Exit the loop
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Please enter a number between 1 and 6."); // Display error for invalid input
+                    break;
+            }
+        }
+    }
+}
+
 
 
 
