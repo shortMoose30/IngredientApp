@@ -79,6 +79,15 @@ class RecipeApp
             Console.WriteLine($"{i + 1}. {steps[i].Description}");
         }
     }
+    // Method to scale the recipe by a given factor
+    public void ScaleRecipe(double factor)
+    {
+        // Scale the quantity of each ingredient
+        foreach (Ingredient ingredient in ingredients)
+        {
+            ingredient.Quantity *= factor;
+        }
+    }
 
 
 
