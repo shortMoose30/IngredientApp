@@ -88,6 +88,9 @@ class RecipeApp
             ingredient.Quantity *= factor;
         }
     }
+    // Method to reset ingredient quantities by re-entering details
+    public void ResetQuantities()
+
 
 
 
