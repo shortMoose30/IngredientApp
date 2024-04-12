@@ -22,6 +22,13 @@ class RecipeApp
     private Ingredient[] ingredients; // Array to store ingredients
     private Step[] steps; // Array to store steps
 
+    // Method to enter recipe details
+    public void EnterRecipeDetails()
+    {
+        Console.Write("Enter the number of ingredients: ");
+        int numIngredients = Convert.ToInt32(Console.ReadLine());
+        ingredients = new Ingredient[numIngredients]; // Initialize ingredients array
+
 
 
 
