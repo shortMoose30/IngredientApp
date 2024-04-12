@@ -60,6 +60,9 @@ class RecipeApp
         }
     }
 
+    // Method to display the recipe
+    public void DisplayRecipe()
+
 
 
 
