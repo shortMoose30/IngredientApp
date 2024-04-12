@@ -90,6 +90,12 @@ class RecipeApp
     }
     // Method to reset ingredient quantities by re-entering details
     public void ResetQuantities()
+    {
+        EnterRecipeDetails();
+    }
+
+    
+
 
 
 
