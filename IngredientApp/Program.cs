@@ -45,6 +45,10 @@ class RecipeApp
             ingredients[i].Unit = Console.ReadLine();
         }
 
+        Console.Write("Enter the number of steps: ");
+        int numSteps = Convert.ToInt32(Console.ReadLine());
+        steps = new Step[numSteps]; // Initialize steps array
+
 
 
 
