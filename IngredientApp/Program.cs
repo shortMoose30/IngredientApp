@@ -71,6 +71,14 @@ class RecipeApp
         {
             Console.WriteLine($"{ingredient.Quantity} {ingredient.Unit} of {ingredient.Name}");
         }
+        Console.WriteLine("\nSteps:");
+
+        // Display each step
+        for (int i = 0; i < steps.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {steps[i].Description}");
+        }
+    }
 
 
 
