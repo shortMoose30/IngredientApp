@@ -18,6 +18,11 @@ class Step
 
 // Class to manage recipe details and operations
 class RecipeApp
+{
+    private Ingredient[] ingredients; // Array to store ingredients
+    private Step[] steps; // Array to store steps
+
+
 
 
 
