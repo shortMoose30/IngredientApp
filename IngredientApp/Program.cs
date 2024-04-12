@@ -49,6 +49,18 @@ class RecipeApp
         int numSteps = Convert.ToInt32(Console.ReadLine());
         steps = new Step[numSteps]; // Initialize steps array
 
+        // Loop to input details for each step
+        for (int i = 0; i < numSteps; i++)
+        {
+            steps[i] = new Step(); // Initialize new step object
+
+            // Prompt user for step description
+            Console.Write($"Enter step {i + 1}: ");
+            steps[i].Description = Console.ReadLine();
+        }
+    }
+
+
 
 
 
