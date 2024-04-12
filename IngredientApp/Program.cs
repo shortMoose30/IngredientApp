@@ -94,7 +94,13 @@ class RecipeApp
         EnterRecipeDetails();
     }
 
-    
+    // Method to clear all data
+    public void ClearData()
+    {
+        ingredients = null; // Clear ingredients array
+        steps = null; // Clear steps array
+    }
+}
 
 
 
