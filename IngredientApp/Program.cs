@@ -109,7 +109,22 @@ class Program
     static void Main(string[] args)
     {
         RecipeApp recipeApp = new RecipeApp(); // Initialize RecipeApp object
-        bool running = true
+        bool running = true;
+
+        // Main menu loop
+        while (running)
+        {
+            // Display menu options
+            Console.WriteLine("\n1. Enter recipe details");
+            Console.WriteLine("2. Display recipe");
+            Console.WriteLine("3. Scale recipe");
+            Console.WriteLine("4. Reset quantities");
+            Console.WriteLine("5. Clear all data");
+            Console.WriteLine("6. Exit");
+            Console.Write("Enter your choice: ");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
 
 
 
