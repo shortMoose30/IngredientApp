@@ -1,3 +1,10 @@
+The initial recipe management application had various enhancements to meet and beyond the necessary criteria, based on input received throughout the assessment. At first, the code stored steps and ingredients in memory and let users enter them. However, it lacked sophisticated display features and strong error handling.
+
+Input validation functions were implemented to verify that numerical inputs, including quantities and calories, are valid and non-negative, in response to the error handling feedback. This update enhances the application's overall dependability and user experience by preventing program crashes brought on by incorrect user inputs. To be more precise, a GetValidatedDoubleInput function was introduced to validate and encourage the re-entry of incorrect inputs.
+Furthermore, the display functionality was improved to produce an output that is both more aesthetically pleasing and instructive. Colored text was added to the ingredients, steps, and total calories sections of the recipe display using ANSI escape codes. This update not only improves the display's aesthetic appeal but also makes it easier for users to recognize the recipe's essential components.
+To guarantee an accurate assessment of total calories, the calorie calculation method was further examined and adjusted. Together, the modifications guarantee that the application satisfies the feedback's greater expectations for error management and sophisticated display. With these enhancements, the application's functionality and user experience are greatly improved, with the goal of receiving full marks in next tests.
+
+
 This assignmet can be accesed through my repository on GitHub: https://github.com/shortMoose30/IngredientApp.git
 To complete the assignment I used visual studio community, I submitted my source code on learn in a zipped folder. It can be unzipped, pasted on visual studio community, and run on the app.
 ![image](https://github.com/shortMoose30/IngredientApp/assets/166826757/2a690b33-af8d-45f5-a802-ffac21fbbf4f)
