@@ -1,172 +1,309 @@
-﻿
-
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-// Class to represent an ingredient in a recipe
-class Ingredient
+namespace RecipeApp
 {
-    public string Name { get; set; } // Name of the ingredient
-    public double Quantity { get; set; } // Quantity of the ingredient
-    public string Unit { get; set; } // Unit of measurement for the ingredientyuu
-}
-
-// Class to represent a step in a recipe
-class Step
-{
-    public string Description { get; set; } // Description of the step
-}
-
-// Class to manage recipe details and operations
-class RecipeApp
-{
-    private Ingredient[] ingredients; // Array to store ingredients
-    private Step[] steps; // Array to store steps
-
-    // Method to enter recipe details
-    public void EnterRecipeDetails()
+    // Ingredient class to store ingredient details
+    class Ingredient
     {
-        Console.Write("Enter the number of ingredients: ");
-        int numIngredients = Convert.ToInt32(Console.ReadLine());
-        ingredients = new Ingredient[numIngredients]; // Initialize ingredients array
+        public string Name { get; set; }
+        public double Quantity { get; set; }
+        public string Unit { get; set; }
+        public double Calories { get; set; }
+        public string FoodGroup { get; set; }
+        private double OriginalQuantity { get; set; }
 
-        // Loop to input details for each ingredient
-        for (int i = 0; i < numIngredients; i++)
+        public Ingredient(string name, double quantity, string unit, double calories, string foodGroup)
         {
-            ingredients[i] = new Ingredient(); // Initialize new ingredient object
-
-            // Prompt user for ingredient name, quantity, and unit
-            Console.Write($"Enter the name of ingredient {i + 1}: ");
-            ingredients[i].Name = Console.ReadLine();
-
-            Console.Write($"Enter the quantity of {ingredients[i].Name}: ");
-            ingredients[i].Quantity = Convert.ToDouble(Console.ReadLine());
-
-            Console.Write($"Enter the unit of measurement for {ingredients[i].Name}: ");
-            ingredients[i].Unit = Console.ReadLine();
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
+            Calories = calories;
+            FoodGroup = foodGroup;
+            OriginalQuantity = quantity;
         }
 
-        Console.Write("Enter the number of steps: ");
-        int numSteps = Convert.ToInt32(Console.ReadLine());
-        steps = new Step[numSteps]; // Initialize steps array
-
-        // Loop to input details for each step
-        for (int i = 0; i < numSteps; i++)
+        public void Scale(double factor)
         {
-            steps[i] = new Step(); // Initialize new step object
+            Quantity = OriginalQuantity * factor;
+        }
 
-            // Prompt user for step description
-            Console.Write($"Enter step {i + 1}: ");
-            steps[i].Description = Console.ReadLine();
+        public void Reset()
+        {
+            Quantity = OriginalQuantity;
+        }
+
+        public override string ToString()
+        {
+            return $"{Quantity} {Unit} of {Name} ({Calories} cal, {FoodGroup})";
         }
     }
 
-    // Method to display the recipe
-    public void DisplayRecipe()
+    // Step class to store each step in the recipe
+    class Step
     {
-        Console.WriteLine("\nRecipe:");
-        Console.WriteLine("Ingredients:");
+        public string Description { get; set; }
 
-        // Display each ingredient with its quantity and unit
-        foreach (Ingredient ingredient in ingredients)
+        public Step(string description)
         {
-            Console.WriteLine($"{ingredient.Quantity} {ingredient.Unit} of {ingredient.Name}");
+            Description = description;
         }
-        Console.WriteLine("\nSteps:");
 
-        // Display each step
-        for (int i = 0; i < steps.Length; i++)
+        public override string ToString()
         {
-            Console.WriteLine($"{i + 1}. {steps[i].Description}");
+            return Description;
         }
     }
-    // Method to scale the recipe by a given factor
-    public void ScaleRecipe(double factor)
+
+    // Recipe class to store recipe details
+    class Recipe
     {
-        // Scale the quantity of each ingredient
-        foreach (Ingredient ingredient in ingredients)
+        public string Name { get; set; }
+        public List<Ingredient> Ingredients { get; private set; }
+        public List<Step> Steps { get; private set; }
+
+        public Recipe(string name)
         {
-            ingredient.Quantity *= factor;
+            Name = name;
+            Ingredients = new List<Ingredient>();
+            Steps = new List<Step>();
         }
-    }
-    // Method to reset ingredient quantities by re-entering details
-    public void ResetQuantities()
-    {
-        EnterRecipeDetails();
-    }
 
-    // Method to clear all data
-    public void ClearData()
-    {
-        ingredients = null; // Clear ingredients array
-        steps = null; // Clear steps array
-    }
-}
-
-// Main program class
-class Program
-{
-    // Main method
-    static void Main(string[] args)
-    {
-        RecipeApp recipeApp = new RecipeApp(); // Initialize RecipeApp object
-        bool running = true;
-
-        // Main menu loop
-        while (running)
+        public void AddIngredient(Ingredient ingredient)
         {
-            // Display menu options
-            Console.WriteLine("\n1. Enter recipe details");
-            Console.WriteLine("2. Display recipe");
-            Console.WriteLine("3. Scale recipe");
-            Console.WriteLine("4. Reset quantities");
-            Console.WriteLine("5. Clear all data");
-            Console.WriteLine("6. Exit");
-            Console.Write("Enter your choice: ");
+            Ingredients.Add(ingredient);
+        }
 
-            int choice = Convert.ToInt32(Console.ReadLine());
+        public void AddStep(Step step)
+        {
+            Steps.Add(step);
+        }
 
-            // Switch case to perform actions based on user choice
-            switch (choice)
+        public void ScaleRecipe(double factor)
+        {
+            foreach (var ingredient in Ingredients)
             {
-                case 1:
-                    recipeApp.EnterRecipeDetails(); // Call EnterRecipeDetails method
-                    break;
-                case 2:
-                    recipeApp.DisplayRecipe(); // Call DisplayRecipe method
-                    break;
-                case 3:
-                    Console.Write("Enter scaling factor (0.5, 2, or 3): ");
-                    double factor = Convert.ToDouble(Console.ReadLine());
-                    recipeApp.ScaleRecipe(factor); // Call ScaleRecipe method with user-provided factor
-                    break;
-                case 4:
-                    recipeApp.ResetQuantities(); // Call ResetQuantities method
-                    break;
-                case 5:
-                    recipeApp.ClearData(); // Call ClearData method
-                    break;
-                case 6:
-                    running = false; // Exit the loop
-                    break;
-                default:
-                    Console.WriteLine("Invalid choice. Please enter a number between 1 and 6."); // Display error for invalid input
-                    break;
+                ingredient.Scale(factor);
+            }
+        }
+
+        public void ResetRecipe()
+        {
+            foreach (var ingredient in Ingredients)
+            {
+                ingredient.Reset();
+            }
+        }
+
+        public double TotalCalories()
+        {
+            return Ingredients.Sum(i => i.Calories * (i.Quantity + i.Quantity));
+        }
+
+        public void Display()
+        {
+            Console.WriteLine($"Recipe: {Name}");
+            Console.WriteLine("Ingredients:");
+            foreach (var ingredient in Ingredients)
+            {
+                Console.WriteLine($"- {ingredient}");
+            }
+            Console.WriteLine("Steps:");
+            for (int i = 0; i < Steps.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Steps[i]}");
+            }
+            double totalCalories = TotalCalories();
+            Console.WriteLine($"Total Calories: {totalCalories}");
+            if (totalCalories > 300)
+            {
+                Console.WriteLine("Warning: Total calories exceed 300!");
+            }
+        }
+    }
+
+    // RecipeManager class to handle multiple recipes
+    class RecipeManager
+    {
+        private List<Recipe> recipes;
+
+        public RecipeManager()
+        {
+            recipes = new List<Recipe>();
+        }
+
+        public void AddRecipe(Recipe recipe)
+        {
+            recipes.Add(recipe);
+            recipes = recipes.OrderBy(r => r.Name).ToList(); // Sort recipes alphabetically by name
+        }
+
+        public void DisplayRecipes()
+        {
+            Console.WriteLine("Available Recipes:");
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {recipes[i].Name}");
+            }
+        }
+
+        public Recipe GetRecipe(int index)
+        {
+            if (index >= 0 && index < recipes.Count)
+            {
+                return recipes[index];
+            }
+            return null;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            RecipeManager recipeManager = new RecipeManager();
+
+            while (true)
+            {
+                Console.WriteLine("Recipe Management System");
+                Console.WriteLine("1. Add a new recipe");
+                Console.WriteLine("2. Display all recipes");
+                Console.WriteLine("3. Display a specific recipe");
+                Console.WriteLine("4. Scale a recipe");
+                Console.WriteLine("5. Reset a recipe to original quantities");
+                Console.WriteLine("6. Clear all data");
+                Console.WriteLine("7. Exit");
+
+                string input = Console.ReadLine();
+                int choice;
+
+                if (!int.TryParse(input, out choice))
+                {
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 7.");
+                    continue;
+                }
+
+                switch (choice)
+                {
+                    case 1:
+                        AddNewRecipe(recipeManager);
+                        break;
+                    case 2:
+                        recipeManager.DisplayRecipes();
+                        break;
+                    case 3:
+                        DisplaySpecificRecipe(recipeManager);
+                        break;
+                    case 4:
+                        ScaleRecipe(recipeManager);
+                        break;
+                    case 5:
+                        ResetRecipe(recipeManager);
+                        break;
+                    case 6:
+                        recipeManager = new RecipeManager();
+                        Console.WriteLine("All data cleared.");
+                        break;
+                    case 7:
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter a number between 1 and 7.");
+                        break;
+                }
+            }
+        }
+
+        static void AddNewRecipe(RecipeManager recipeManager)
+        {
+            Console.Write("Enter recipe name: ");
+            string recipeName = Console.ReadLine();
+            Recipe recipe = new Recipe(recipeName);
+
+            Console.Write("Enter the number of ingredients: ");
+            int ingredientCount = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < ingredientCount; i++)
+            {
+                Console.Write($"Enter the name of ingredient {i + 1}: ");
+                string name = Console.ReadLine();
+                Console.Write($"Enter the quantity of {name}: ");
+                double quantity = double.Parse(Console.ReadLine());
+                Console.Write($"Enter the unit of measurement for {name}: ");
+                string unit = Console.ReadLine();
+                Console.Write($"Enter the calories for {name}: ");
+                double calories = double.Parse(Console.ReadLine());
+                Console.Write($"Enter the food group for {name}: ");
+                string foodGroup = Console.ReadLine();
+                Ingredient ingredient = new Ingredient(name, quantity, unit, calories, foodGroup);
+                recipe.AddIngredient(ingredient);
+            }
+
+            Console.Write("Enter the number of steps: ");
+            int stepCount = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < stepCount; i++)
+            {
+                Console.Write($"Enter description for step {i + 1}: ");
+                string description = Console.ReadLine();
+                Step step = new Step(description);
+                recipe.AddStep(step);
+            }
+
+            recipeManager.AddRecipe(recipe);
+            Console.WriteLine("Recipe added successfully!");
+        }
+
+        static void DisplaySpecificRecipe(RecipeManager recipeManager)
+        {
+            recipeManager.DisplayRecipes();
+            Console.Write("Enter the number of the recipe to display: ");
+            int recipeIndex = int.Parse(Console.ReadLine()) - 1;
+            Recipe recipe = recipeManager.GetRecipe(recipeIndex);
+            if (recipe != null)
+            {
+                recipe.Display();
+            }
+            else
+            {
+                Console.WriteLine("Invalid recipe number.");
+            }
+        }
+
+        static void ScaleRecipe(RecipeManager recipeManager)
+        {
+            recipeManager.DisplayRecipes();
+            Console.Write("Enter the number of the recipe to scale: ");
+            int recipeIndex = int.Parse(Console.ReadLine()) - 1;
+            Recipe recipe = recipeManager.GetRecipe(recipeIndex);
+            if (recipe != null)
+            {
+                Console.WriteLine("Enter scale factor (0.5, 2, or 3): ");
+                double factor = double.Parse(Console.ReadLine());
+                recipe.ScaleRecipe(factor);
+                recipe.Display();
+            }
+            else
+            {
+                Console.WriteLine("Invalid recipe number.");
+            }
+        }
+
+        static void ResetRecipe(RecipeManager recipeManager)
+        {
+            recipeManager.DisplayRecipes();
+            Console.Write("Enter the number of the recipe to reset: ");
+            int recipeIndex = int.Parse(Console.ReadLine()) - 1;
+            Recipe recipe = recipeManager.GetRecipe(recipeIndex);
+            if (recipe != null)
+            {
+                recipe.ResetRecipe();
+                recipe.Display();
+            }
+            else
+            {
+                Console.WriteLine("Invalid recipe number.");
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
